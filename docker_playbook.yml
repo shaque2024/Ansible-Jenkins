@@ -7,7 +7,7 @@
      - name: remove stopped container
        shell: docker rm -f myapp  
      - name: remove docker images
-       shell: docker image rm -f myapp
+       shell: docker image rm -f imgmyapp
        
      - name: create docker image
        shell: docker build -t imgmyapp:v1 . 
