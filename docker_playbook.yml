@@ -1,15 +1,20 @@
-  ---
-  - hosts: web
-    become: true
-    tasks:
-     - name: stop previous version docker
-       shell: docker stop myapp
-     - name: remove stopped container
-       shell: docker rm -f myapp  
-     - name: remove docker images
-       shell: docker image rm -f imgmyapp
-       
-     - name: create docker image
-       shell: docker build -t imgmyapp:v1 . 
-     - name: create docker container
-       shell: docker run -d -p 8089:8080 --name myapp imgmyapp:v1
+---
+- name: Configuring Docker app
+  hosts: all
+  become: true
+  tasks:
+    - name: Stop previous version of container
+      shell: docker stop myapp || true
+
+    - name: Remove stopped container
+      shell: docker rm -f myapp || true
+
+    - name: Remove old docker image
+      shell: docker rmi -f imgmyapp:v1 || true
+
+    - name: Build docker image
+      shell: docker build -t imgmyapp:v1 .
+
+    - name: Run docker container
+      shell: docker run -d -p 8089:8080 --name myapp imgmyapp:v1
+
