@@ -1,0 +1,10 @@
+---
+- name: Configuring image
+  hosts: all
+  become: true
+  tasks:
+    - name: Build docker image
+      shell: docker build -t imgmyapp:v1 .
+
+    - name: Run docker container
+      shell: docker run -d -p 8089:8080 --name myapp imgmyapp:v1
