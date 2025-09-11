@@ -1,0 +1,12 @@
+---
+- name: Copy WAR file to all target servers
+  hosts: all
+  become: true
+  tasks:
+    - name: Copy webapp.war
+      copy:
+        src: /path/on/control/webapp.war   # path on your Ansible server
+        dest: /home/sadmin/webapp.war      # path on target hosts
+        owner: sadmin
+        group: sadmin
+        mode: '0644'
